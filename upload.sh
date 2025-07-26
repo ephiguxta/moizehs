@@ -8,7 +8,7 @@ port="$1"
 arduino_cli_path=$(whereis arduino-cli | grep -Eo '/.*')
 test -e $arduino_cli_path || exit 1
 
-test -d moizehs || mkdir moizehs; cp src/moizehs.ino moizehs/
+mv src moizehs
 
 SRC="moizehs/moizehs.ino"
 
@@ -19,10 +19,13 @@ arduino-cli compile $SRC \
     --log-level trace
 
 build_error="$?"
-(( build_error != 0 )) && exit 1
+
+(( build_error != 0 )) && {
+    mv moizehs src; exit 1
+}
 
 arduino-cli upload $SRC \
     --fqbn esp32:esp32:esp32 \
     -p $port
 
-rm -rf moizehs/
+mv moizehs src
