@@ -13,9 +13,11 @@ bool bt_begin(void) {
 
     serial_bt.getBtAddress(mac);
 
-    for(uint8_t i = 0; i < 8; i++) {
+    for(uint8_t i = 0; i < ESP_BD_ADDR_LEN; i++) {
         Serial.printf("%02x ", mac[i]);
     }
 
     Serial.printf("\n");
+
+    return true;
 }
