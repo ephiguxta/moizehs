@@ -52,10 +52,6 @@ bool bt_client_cmd_recv(struct bt_cmd_data *bt_cmd_info) {
 }
 
 bool bt_client_valid_cmd(const char cmd[32]) {
-    const char cmds[2][32] {
-        "/get_vin",
-        "/get_km"
-    };
 
     for(uint8_t i = 0; i < 2; i++) {
         if(strncmp(cmd, cmds[i], 32) == 0) {
